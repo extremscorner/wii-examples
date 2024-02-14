@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -73,15 +74,17 @@ int main(int argc, char **argv) {
 		goto error;
 	}
 
-	while ((pent=readdir(pdir))!=NULL) {
-		stat(pent->d_name,&statbuf);
-		if(strcmp(".", pent->d_name) == 0 || strcmp("..", pent->d_name) == 0)
+	do {
+		errno=0;
+		pent=readdir(pdir);
+		if(pent == NULL || strcmp(".", pent->d_name) == 0 || strcmp("..", pent->d_name) == 0)
 			continue;
+		stat(pent->d_name,&statbuf);
 		if(S_ISDIR(statbuf.st_mode))
 			printf("%s <dir>\n", pent->d_name);
 		if(!(S_ISDIR(statbuf.st_mode)))
 			printf("%s %lld\n", pent->d_name, statbuf.st_size);
-	}
+	} while (pent != NULL || errno == EOVERFLOW);
 	closedir(pdir);
 
 error:
