@@ -34,22 +34,13 @@ static inline void set_text_color(u32 color)
 
 static void activate_font_texture()
 {
-    u32 texture_size;
-    void *texels;
-
-    texels = (void *)fontdata + fontdata->sheet_image;
-    GX_InitTexObj(&fonttex, texels,
+    GX_InitTexObj(&fonttex, (void *)fontdata + fontdata->sheet_image,
                   fontdata->sheet_width, fontdata->sheet_height,
                   fontdata->sheet_format, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GX_InitTexObjLOD(&fonttex, GX_LINEAR, GX_LINEAR, 0., 0., 0.,
-                     GX_TRUE, GX_TRUE, GX_ANISO_1);
+                     GX_TRUE, GX_TRUE, GX_ANISO_4);
     GX_LoadTexObj(&fonttex, GX_TEXMAP0);
 
-    texture_size = GX_GetTexBufferSize(fontdata->sheet_width,
-                                       fontdata->sheet_height,
-                                       fontdata->sheet_format,
-                                       GX_FALSE, 0);
-    DCStoreRange(texels, texture_size);
     GX_InvalidateTexAll();
 }
 
@@ -91,6 +82,7 @@ static void setup_font()
     }
 
     SYS_InitFont(fontdata);
+    fontdata->sheet_image = (fontdata->sheet_image + 31) & ~31;
     activate_font_texture();
 
     text_size = fontdata->cell_height;
@@ -100,7 +92,6 @@ static void setup_gx()
 {
     GXColor backgroundColor = {0, 0, 0, 255};
     void *fifoBuffer = NULL;
-    Mtx mv;
 
     fifoBuffer = MEM_K0_TO_K1(memalign(32,FIFO_SIZE));
     memset(fifoBuffer, 0, FIFO_SIZE);
@@ -131,10 +122,6 @@ static void setup_gx()
     GX_SetNumTexGens(1);
     GX_SetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
     GX_SetTevOp(GX_TEVSTAGE0, GX_MODULATE);
-
-    guMtxIdentity(mv);
-    guMtxTransApply(mv, mv, 0.4, 0.4, 0);
-    GX_LoadPosMtxImm(mv, GX_PNMTX0);
 }
 
 static void setup_viewport()
