@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
 
 	// Initialise the console, required for printf
 	console_init(xfb,0,0,rmode->fbWidth,rmode->xfbHeight,rmode->fbWidth*VI_DISPLAY_PIX_SZ);
+	//CON_EnableGecko(1, true);
 
 	// Set up the video registers with the chosen mode
 	VIDEO_Configure(rmode);
@@ -50,7 +51,7 @@ int main(int argc, char **argv) {
 	printf("\x1b[2;0H");
 
 
-	printf("Hello World!");
+	printf("Hello World!\n");
 
 	while(1) {
 
