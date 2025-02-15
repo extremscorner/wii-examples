@@ -25,8 +25,9 @@ int main(int argc, char **argv) {
 
 	// Initialise the console, required for printf
 	console_init(xfb,0,0,rmode->fbWidth,rmode->xfbHeight,rmode->fbWidth*VI_DISPLAY_PIX_SZ);
-	//CON_EnableBarnacle(EXI_CHANNEL_0, EXI_DEVICE_1);
-	//CON_EnableGecko(EXI_CHANNEL_1, true);
+	/* if((SYS_GetConsoleType()&SYS_CONSOLE_MASK)==SYS_CONSOLE_DEVELOPMENT)
+		CON_EnableBarnacle(EXI_CHANNEL_0, EXI_DEVICE_1); */
+	/* CON_EnableGecko(EXI_CHANNEL_1, true); */
 
 	// Set up the video registers with the chosen mode
 	VIDEO_Configure(rmode);
