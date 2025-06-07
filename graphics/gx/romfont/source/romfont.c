@@ -75,7 +75,7 @@ static void draw_font_cell(int16_t x1, int16_t y1, uint32_t c, int16_t s1, int16
 
 static void setup_font()
 {
-    if (SYS_GetFontEncoding() == 0) {
+    if (SYS_GetFontEncoding() == SYS_FONTENC_ANSI) {
         fontdata = memalign(32, SYS_FONTSIZE_ANSI);
     } else {
         fontdata = memalign(32, SYS_FONTSIZE_SJIS);
