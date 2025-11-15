@@ -161,8 +161,7 @@ void *initialise() {
 	VIDEO_SetNextFramebuffer(framebuffer);
 	VIDEO_SetBlack(false);
 	VIDEO_Flush();
-	VIDEO_WaitVSync();
-	if(rmode->viTVMode&VI_NON_INTERLACE) VIDEO_WaitVSync();
+	VIDEO_WaitForFlush();
 
 	return framebuffer;
 

@@ -242,8 +242,7 @@ int main(int argc, char **argv)
     VIDEO_Flush();
 
     // Wait for Video setup to complete
-    VIDEO_WaitVSync();
-    if (vmode->viTVMode & VI_NON_INTERLACE) VIDEO_WaitVSync();
+    VIDEO_WaitForFlush();
 
     setup_gx();
     setup_font();
