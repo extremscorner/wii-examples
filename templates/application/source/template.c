@@ -21,10 +21,10 @@ int main(int argc, char **argv) {
 	rmode = VIDEO_GetPreferredMode(NULL);
 
 	// Allocate memory for the display in the uncached region
-	xfb = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rmode));
+	xfb = SYS_AllocateFramebuffer(rmode);
 
 	// Initialise the console, required for printf
-	console_init(xfb,0,0,rmode->fbWidth,rmode->xfbHeight,rmode->fbWidth*VI_DISPLAY_PIX_SZ);
+	CON_Init(xfb,0,0,rmode->fbWidth,rmode->xfbHeight,rmode->fbWidth*VI_DISPLAY_PIX_SZ);
 	/* if((SYS_GetConsoleType()&SYS_CONSOLE_MASK)==SYS_CONSOLE_DEVELOPMENT)
 		CON_EnableBarnacle(EXI_CHANNEL_0, EXI_DEVICE_1); */
 	/* CON_EnableGecko(EXI_CHANNEL_1, true); */

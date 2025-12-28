@@ -235,7 +235,7 @@ int main(int argc, char **argv)
     WPAD_Init();
 
     vmode = VIDEO_GetPreferredMode(NULL);
-    xfb = MEM_K0_TO_K1(SYS_AllocateFramebuffer(vmode));
+    xfb = SYS_AllocateFramebuffer(vmode);
     VIDEO_Configure(vmode);
     VIDEO_SetNextFramebuffer(xfb);
     VIDEO_SetBlack(false);
