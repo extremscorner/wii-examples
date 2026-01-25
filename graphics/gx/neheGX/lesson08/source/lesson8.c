@@ -175,7 +175,8 @@ int main(int argc,char **argv)
 
 	guVector cubeAxis = {1,1,1};
 
-	while(1) {
+	while (SYS_MainLoop()) {
+
 		WPAD_ScanPads();
 		if(WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) exit(0);
 		else if (WPAD_ButtonsHeld(0)&WPAD_BUTTON_UP) zt -= 0.25f;

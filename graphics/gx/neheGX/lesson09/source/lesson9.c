@@ -164,7 +164,8 @@ int main(int argc,char **argv)
 
 	guVector starAxis1 = {0,1,0};
 	guVector starAxis2 = {0,0,1};
-	while(1) {
+
+	while (SYS_MainLoop()) {
 
 		WPAD_ScanPads();
 		if(WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) exit(0);

@@ -139,7 +139,7 @@ int main(int argc,char **argv)
 		}
 	}
 
-	while(1) {
+	while (SYS_MainLoop()) {
 
 		WPAD_ScanPads();
 		if(WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) exit(0);
