@@ -137,11 +137,10 @@ static void setup_viewport()
     GX_LoadProjectionMtx(proj, GX_ORTHOGRAPHIC);
 
     GX_SetViewport(0, 0, w, h, 0, 1);
-
-    f32 yscale = GX_GetYScaleFactor(h, vmode->xfbHeight);
-    GX_SetDispCopyYScale(yscale);
     GX_SetScissor(0, 0, w, h);
+    GX_SetDispCopyFrame2Field(vmode->copy_interlaced);
     GX_SetDispCopySrc(0, 0, w, h);
+    GX_SetDispCopyYScale(GX_GetYScaleFactor(h, vmode->xfbHeight));
     GX_SetDispCopyDst(w, vmode->xfbHeight);
     GX_SetCopyFilter(vmode->aa, vmode->sample_pattern, GX_TRUE, vmode->vfilter);
 }
